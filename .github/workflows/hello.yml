@@ -9,4 +9,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: exibir msg log
-        run: echo "Hello, GitHub Actions!"!"
+        run: echo "Hello, GitHub Actions!"

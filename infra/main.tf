@@ -104,7 +104,5 @@ resource "azurerm_linux_virtual_machine" "vm" {
     version   = "latest"
   }
 
-  settings = jsonencode({
-    commandToExecute = "apt-get update && apt-get install -y python3.9"
-  })
 }
+

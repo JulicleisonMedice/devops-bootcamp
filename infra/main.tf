@@ -104,3 +104,17 @@ resource "azurerm_linux_virtual_machine" "vm" {
     version   = "latest"
   }
 }
+
+resource "azurerm_virtual_machine_extension" "install_python" {
+  name                 = "install-python"
+  virtual_machine_id   = azurerm_linux_virtual_machine.example.id
+  publisher            = "Microsoft.Azure.Extensions"
+  type                 = "CustomScript"
+  type_handler_version = "2.0"
+
+  settings = <<SETTINGS
+    {
+      "commandToExecute": "sudo apt update && sudo apt install -y python3.9"
+    }
+SETTINGS
+}

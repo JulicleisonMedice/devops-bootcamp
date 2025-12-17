@@ -99,22 +99,20 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   source_image_reference {
     publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "22.04-LTS"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts-gen2"
     version   = "latest"
   }
 }
-
 resource "azurerm_virtual_machine_extension" "install_python" {
-  name                 = "install-python"
-  virtual_machine_id   = azurerm_linux_virtual_machine.example.id
-  publisher            = "Microsoft.Azure.Extensions"
-  type                 = "CustomScript"
-  type_handler_version = "2.0"
+  name                       = "install-python"
+  virtual_machine_id         = azurerm_linux_virtual_machine.vm.id
+  publisher                  = "Microsoft.Azure.Extensions"
+  type                        = "CustomScript"
+  type_handler_version       = "2.1"
+  auto_upgrade_minor_version = true
 
-  settings = <<SETTINGS
-    {
-      "commandToExecute": "sudo apt update && sudo apt install -y python3.9"
-    }
-SETTINGS
+  settings = jsonencode({
+    commandToExecute = "apt-get update && apt-get install -y python3.9"
+  })
 }
